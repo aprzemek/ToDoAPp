@@ -2,6 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="pl.sdacademy.todo.dto.Task" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Todo app</title>
@@ -22,29 +23,35 @@
     <input type="text" id="newTask" name="newTask"/><br/>
     <input type="submit" value="Dodaj"/>
 </form>
-
-<%
-    String newTask = request.getParameter("newTask");
-    if (newTask != null && !newTask.isEmpty()) {
-        Task task = new Task();
-        task.setDescription(newTask);
-        tasks.add(task);
-    }
-%>
-
 <br>
+
 <ol>
-    <%
-        for (Task s : tasks) {
-            out.println("<li>" + s.getDescription() + "</li>");
-        }
-    %>
+    <c:if test="${!empty param.newTask && tasks.add(Task.create(param.newTask))}">
+        <c:redirect url="index.jsp"/>
+    </c:if>
+
+    <c:if test="${!empty param.id}">
+        <%
+            int id = Integer.valueOf(request.getParameter("id"));
+            tasks.remove(id);
+        %>
+        <c:redirect url="index.jsp"/>
+
+    </c:if>
+
+    <%--@elvariable id="task" type="pl.sdacademy.todo.dto.Task"--%>
+    <c:forEach var="task" items="${sessionScope['tasks']}">
+
+        <c:url var="deleteUrl" value="index.jsp">
+            <c:param name="id" value="${tasks.indexOf(task)}"/>
+        </c:url>
+
+        <li>${task.description} <a href="${deleteUrl}">Usuń</a></li>
+    </c:forEach>
 </ol>
-<%
-    if (tasks.isEmpty()) {
-        out.println("Brak zadań do wykonania");
-    }
-%>
+<c:if test="${tasks.isEmpty()}">
+    Brak zadań do wykonania
+</c:if>
 <script src="webjars/jquery/3.3.1-1/jquery.min.js"></script>
 <script src="webjars/popper.js/1.14.4/popper.min.js"></script>
 <script src="webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
