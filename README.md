@@ -33,3 +33,22 @@ Tytuł aplikacji składający się z dwóch słów zapisz w plikach properties. 
 Zadanie 7
 ---------
 Używając Bootstrapa opracuj atrakcyjny wygląd aplikacji
+
+Zadanie 8
+---------
+Przenieś logikę aplikacji ze skryptletów do serwletów. Funkcjonalność serwletów jest następująca:
+  - ustawienie preferencji językowych
+  - CRUD dla zadań
+Użyj wzorca Model-View-Controller
+
+Zadanie 9
+---------
+Dodaj warstwę utrwalania w bazie danych (Hibernate/JPA)
+
+Zadanie 10
+----------
+Dodaj możliwość edycji zadania do wykonania
+
+Zadanie 11
+----------
+Rozszerz zadanie o możliwość wskazania mu terminu ważności, priorytetu. Dodaj do aplikacji możliwość sortowania wg daty/priorytetu zadania
